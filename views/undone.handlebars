@@ -1,0 +1,42 @@
+
+    <body>
+    <div class="container">
+      <div class="row">
+    <h2>{{title}}</h2>
+    <table class="table table-striped table-hover table-bordered">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Assignee</th>
+        <th scope="col">Done</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td>{{title}}</td>
+        <td>{{assignee}}</td>
+        <td>{{done}}</td>
+
+      </tr>
+      {{/each}}
+      
+    </tbody>
+    <div class="container">
+          <a id="add" class="btn btn btn-primary" type="button" href="/addTask">{{addNewTask}}</a>
+    </div>
+
+    <div class="container">
+      <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+            List
+          </button>
+      <div class="dropdown-menu" aria-labelledby="triggerId">
+        <a class="dropdown-item" href="/">List All</a>
+        <a class="dropdown-item" href="/done">List Done</a>
+        <a class="dropdown-item" href="#">List Undone</a>
+      </div>
+    </div>
+  
+  </body>
