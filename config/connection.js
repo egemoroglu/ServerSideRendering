@@ -6,7 +6,10 @@ const client = new Client({
     host: 'mytodo-database.co5qpleyensq.eu-north-1.rds.amazonaws.com', 
     database: 'TODO', 
     password: 'Gktrk06.', 
-    port: 5432
+    port: 5432,
+    ssl: {
+      rejectUnauthorized: false
+    }
   });
   client.connect().then(() => {
     console.log('Connected to database')})
