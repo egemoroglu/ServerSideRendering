@@ -1,0 +1,85 @@
+Lotec Technology Challenge No: 2 Server Side Rendering
+
+Main Objective of the Application and Challenge: Implement an application using Handlebars as template engine and express.js as
+the web framework, use postgreSQL as database management system, host the website on Amazon Web Services(AWS) EC2 machine and 
+host database on AWS RDS
+
+Features of the Application:
+
+1. List All TODO Tasks from the Browser
+2. List All Done TODO Tasks from the Browser
+3. List All Undone TODO Tasks from the Browser
+4. Add a New TODO Task from the Browser
+5. Delete a TODO Task from the Browser
+6. Update a TODO Task from the Browser
+7. Mark a Done TODO Task as Undone from the Browser
+8. Mark an Undone TODO Task as Done from the Browser
+
+Installing express.js, handlebars, body-parser, method-override (On Terminal)
+npm install express express-handlebars body-parser method-override
+
+Installing pgAdmin
+npm install pg
+
+Install PostgreSQL From:
+https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+
+Warning: If there is "The database cluster initialisation failed" failure, please check the locale settings first, then delete and reinstall the PostgreSQL with correct locale selection.
+
+Once everything is up and running (try to write clean code), host the website on AWS EC2 machine.
+
+Steps to Host the Web site on AWS EC2 machine
+
+1. Create a new account(unless already have an account) on Amazon Web Services
+2. Navigate to the EC2 from the search bar on top of the Amazon website
+3. Click on instances
+4. Click on launch instances and enter the server name
+5. Select the operating system of the machine
+6. Select the instance type (free tier eligible recommended)
+7. Create a new key pair and save it in a secure place
+8. Do not forget to select the "allow ssh traffic form anywhere(0.0.0.0/0)"
+
+Connect to the EC2 machine:
+There four ways to connect to the EC2 machine, however simplest way is to selecting the "EC2 Instance Connect" option.
+Check the machine status.
+
+Steps to Host the Database on AWS RDS
+
+1. Navigate to RDS from the search bar on top of the Amazon website
+2. Click on the databases
+3. Click on Create Database
+4. Select the Desired Engine Type (PostgreSQL is selected for this project)
+5. Select the version of the database
+6. Select the Template (Free Tier is recommended)
+7. Enter master user information and password 
+8. Allow public access if needed 
+9. Choose VPC security group
+10. Determine the DB instance identifier if needed
+
+On pgAdmin specific:
+1. Create a new server
+2. Enter desired server name
+3. Copy the endpoint address on the RDS menu under "Connectivity and Security" section
+4. Paste the endpoint address on host
+5. Enter the port (5432 as default)
+6. If there are no issues hosting is complete
+
+Incase of time out issues;
+1. Click on VPC security groups on RDS menu under "Connectivity and Security" section
+2. Edit inbound rules
+3. Add a new rule allowing PostgreSQL access
+
+Connect to the database from EC2 machine
+1. Install PostgreSQL (or used database) on machine
+2. Install httpd (apache server) if needed
+3. Start the httpd server and database if needed
+4. Copy the endpoint address on the RDS menu under "Connectivity and Security" section and paste it on the console as the host address
+5. Enter master user name and password of RDS
+6. Check the connection
+
+At last the:
+1. Inside the code in connection section change the host as the endpoint address on the RDS
+2. Easy way to pull the application on EC2 machine is to commiting the application on github and pulling from github
+3. Run the application on EC2 machine
+4. Navigate to the public IP on the browser
+
