@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../model/database');
 const todoService = require('../controller/TodoService')
 
 router.get('/', async (req, res) => {
