@@ -1,115 +1,122 @@
 const express = require('express');
 const router = express.Router();
-const orm = require('../config/orm');
+const db = require('../model/database');
+const todoService = require('../controller/TodoService')
 
-//Route Index
-router.get('/', (req, res) => {
-    const id = req.params.id;
-    orm.selectAll(function(error, data){
-        if(error) throw error;
+router.get('/', async (req, res) => {
+    try {
+        const data = await todoService.getAllTasks();
         res.render('index', {
-            data: data.rows,
+            data: data,
             title: 'TODO List',
             addNewTask: "Add new task",
         });
-    });
-})
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
 
-//Route Undone List
-router.get('/undone', (req, res) => {
-    orm.selectUndone(function(error, data){
-        if(error) throw error;
-
+// Route Undone List
+router.get('/undone', async (req, res) => {
+    try {
+        const data = await todoService.getUndoneTasks();
         res.render('undone', {
-            data: data.rows,
+            data: data,
             title: 'Undone TODOS',
             addNewTask: "Add New task"
         });
-        console.log(data);
-    });
-})
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
 
-//Route Done List
-router.get('/done', (req, res) => {
-    orm.selectDone(function(error, data){
-        if(error) throw error;
-
+// Route Done List
+router.get('/done', async (req, res) => {
+    try {
+        const data = await todoService.getDoneTasks();
         res.render('done', {
-            data: data.rows,
+            data: data,
             title: 'Done TODOS',
             addNewTask: "Add New task"
         });
-        console.log(data);
-    });
-})
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
 
-//Route Add Task
+// Route Add Task
 router.get('/addTask', (req, res) => {
-    res.render('addTask', {
-    });
-})
+    res.render('addTask', {});
+});
 
-//Route Update Task
+// Route Update Task
 router.get('/updateTask/:id', (req, res) => {
     const id = req.params.id;
-    res.render('updateTask', {
-        id
-    }      
-    );
-})
+    res.render('updateTask', { id });
+});
 
-//Add Task
-router.post('/add', (req, res) => {
-    const title = req.body.title;
-    const assignee = req.body.assignee;
-
-    orm.addTask(title, assignee, function(error, data){
-        if(error) throw error;
-
-    res.redirect('/');
-    });
-})
-
-//Delete Task
-router.post('/delete/:id', (req, res) => {
-    const id = req.params.id;
-    orm.deleteTask(id, function(error, data){
-        if(error) throw error;
+// Add Task
+router.post('/add', async (req, res) => {
+    const { title, assignee } = req.body;
+    try {
+        await todoService.addTask(title, assignee);
         res.redirect('/');
-    });
-})
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
 
-//Update Task
-router.post('/update/:id', (req, res) => {
+// Delete Task
+router.post('/delete/:id', async (req, res) => {
     const id = req.params.id;
-    const title = req.body.title;
-    orm.updateTask(id, title, function(error, data){
-        if(error) throw error;
-
-    res.redirect('/');
-    });
-    
-})
-
-//Mark Task as Done
-router.post('/markDone/:id', (req, res) => {
-    const id = req.params.id;
-    orm.markDone(id, function(error, data){
-        if(error) throw error;
-     
+    try {
+        await todoService.deleteTask(id);
         res.redirect('/');
-    });
-})
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
 
-//Mark Task as Undone
-router.post('/markUndone/:id', (req, res) => {
+// Update Task
+router.post('/update/:id', async (req, res) => {
     const id = req.params.id;
-    orm.markUndone(id, function(error, data){
-        if(error) throw error;
-
+    const { title } = req.body;
+    try {
+        await todoService.updateTask(id, title);
         res.redirect('/');
-            
-    });
-})
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+// Mark Task as Done
+router.post('/markDone/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        await todoService.markTaskDone(id);
+        res.redirect('/');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+// Mark Task as Undone
+router.post('/markUndone/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        await todoService.markTaskUndone(id);
+        res.redirect('/');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
 
 module.exports = router;

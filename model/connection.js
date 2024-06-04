@@ -2,10 +2,10 @@ const {Client} = require('pg');
 
 //Database connection
 const client = new Client({
-    user: 'postgres', 
-    host: 'mytodo-database.co5qpleyensq.eu-north-1.rds.amazonaws.com', 
-    database: 'TODO', 
-    password: 'Gktrk06.', 
+    user: process.env.DATABASE_USER, 
+    host: process.env.DATABASE_HOST, 
+    database: process.env.DATABASE_NAME, 
+    password: process.env.DATABASE_PASSWORD, 
     port: 5432,
     ssl: {
       rejectUnauthorized: false
