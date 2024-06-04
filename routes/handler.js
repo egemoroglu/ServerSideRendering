@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const todoService = require('../controller/TodoService')
+const todoService = require('../services/TodoService')
 
 router.get('/', async (req, res) => {
     try {
